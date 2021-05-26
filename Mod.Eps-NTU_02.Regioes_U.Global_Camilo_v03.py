@@ -34,7 +34,7 @@ T = np.zeros((linD, n_var))  # Inicializando a matriz das temperaturas
 P = np.zeros((linD, n_var))  # Inicializando a matriz das pressões
 h = np.zeros((linD, n_var))  # Inicializando a matriz das entalpia
 s = np.zeros((linD, n_var))  # Inicializando a matriz das entropia
-m_dot = np.zeros((linD, n_var))  # Inicializando a matriz das vazões mássicas
+m_dot = np.zeros((linD, n_var))  # Inicializando a matriz das vazões massicas
 V_dot = np.zeros((linD, n_var))  # Inicializando a matriz das vazões volumétricas
 H = np.zeros((linD, n_var))  # Inicializando a matriz das alturas de elevações
 F = np.zeros((linD, n_var))  # Inicializando a matriz das frequencias dos motores
@@ -44,10 +44,8 @@ F = np.zeros((linD, n_var))  # Inicializando a matriz das frequencias dos motore
 # T[:, 2] = termo_var[:, 12] + 273.15  # Temperatura da água de resfriamento na saída 1 do condensador [K]
 # T[:, 3] = termo_var[:, 13] + 273.15  # Temperatura da água de resfriamento na saída 2 do condensador [K]
 # T[:, 4] = termo_var[:, 6] + 273.15  # Temperatura da água condensada na saída do condensador [K]
-# T[:, 5] = termo_var[:, 10] + 273.15  # Temperatura da água de resfriamento na entrada 1 do condensador [K]
 # P[:, 2] = termo_var[:, 2] * 1e3  # Pressão na saída da torre direcionada para o condensador [Pa]
 # P[:, 3] = termo_var[:, 4] * 1e3  # Pressão da água condensada e desaerada depois da bomba de alta pressão [Pa]
-# P[:, 4] = termo_var[:, 1] * 1e3  # Pressão na entrada do condensador lado frio (água da torre de resfriamento) [Pa]
 F[:, 0] = termo_var[:, 19]  # Frequencia da bomba 01 de re-circulação da torre
 F[:, 1] = termo_var[:, 20]  # Frequencia da bomba 02 de re-circulação da torre
 F[:, 2] = termo_var[:, 23]  # Frequencia da bomba de alta da caldeira
@@ -102,3 +100,7 @@ h[:, 1] = PropsSI('H', 'P', P[:, 1], 'S', s[:, 0], 'Water')  # Entalpia isentró
 h[:, 1] = h[:, 0] - ((h[:, 0] - h[:, 1]) * eta_ise_t)  # Obtendo a entalpia real [j/kg-k]
 T[:, 1] = PropsSI('T', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Temperatura na saída da turbina [K]
 s[:, 1] = PropsSI('S', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Entropia na saída da turbina [J/K]
+
+"SEÇÃO 03 - ENTRADA DO CONDENSADOR"
+T[:, 3] = termo_var[:, 10] + 273.15  # Temperatura da água de resfriamento na entrada do condensador [K]
+P[:, 3] = termo_var[:, 1] * 1e3  # Pressão na entrada do condensador lado frio (água da torre de resfriamento) [Pa]
