@@ -34,6 +34,7 @@ T = np.zeros((linD, n_var))  # Inicializando a matriz das temperaturas
 P = np.zeros((linD, n_var))  # Inicializando a matriz das pressões
 h = np.zeros((linD, n_var))  # Inicializando a matriz das entalpia
 s = np.zeros((linD, n_var))  # Inicializando a matriz das entropia
+rho = np.zeros((linD, n_var))  # Inicializando a matriz das densidades
 m_dot = np.zeros((linD, n_var))  # Inicializando a matriz das vazões mássicas
 V_dot = np.zeros((linD, n_var))  # Inicializando a matriz das vazões volumétricas
 H = np.zeros((linD, n_var))  # Inicializando a matriz das alturas de elevações
@@ -100,4 +101,8 @@ s[:, 1] = PropsSI('S', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Entropia na saíd
 
 "SEÇÃO 03 - ENTRADA DO CONDENSADOR"
 T[:, 3] = termo_var[:, 10] + 273.15  # Temperatura da água de resfriamento na entrada 01 do condensador [K]
-P[:, 3] = termo_var[:, 1] * 1e3  # Pressão na entrada do condensador lado frio (água da torre de resfriamento) [Pa]
+P[:, 3] = termo_var[:, 1] * 1e3  # Pressão na entrada 01 do condensador lado frio (água da torre de resfriamento) [Pa]
+rho[:, 3] = PropsSI('D', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Densidade na entrada 01 do condensador [kg/m^3]
+
+"""Resolvendo Dentro do Condensador"""
+m_dot[:, 3] = V_dot[:, 1] * rho[:, 3]
