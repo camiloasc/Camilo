@@ -100,12 +100,11 @@ h[:, 1] = h[:, 0] - ((h[:, 0] - h[:, 1]) * eta_ise_t)  # Obtendo a entalpia real
 T[:, 1] = PropsSI('T', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Temperatura na saída da turbina [K]
 s[:, 1] = PropsSI('S', 'P', P[:, 1], 'H', h[:, 1], 'Water')  # Entropia na saída da turbina [J/K]
 
-"SEÇÃO 03 - ENTRADA DO CONDENSADOR"
+"SEÇÃO 03 - ENTRADA DA ÁGUA DE REC. 01 NO CONDENSADOR"
 T[:, 3] = termo_var[:, 10] + 273.15  # Temperatura da água de resfriamento na entrada 01 do condensador [K]
 P[:, 3] = termo_var[:, 1] * 1e3  # Pressão na entrada 01 do condensador lado frio (água da torre de resfriamento) [Pa]
 rho[:, 3] = PropsSI('D', 'P', P[:, 3], 'T', T[:, 3], 'Water')  # Densidade na entrada 01 do condensador [kg/m^3]
 Pr[:, 3] = PropsSI('Prandtl', 'P', P[:, 3], 'T', T[:, 3], 'Water')  # Densidade na entrada 01 do condensador [kg/m^3]
 
-"""Resolvendo Dentro do Condensador"""
+"""Resolvendo dentro do condensador"""
 m_dot[:, 3] = V_dot[:, 1] * rho[:, 3]
-
